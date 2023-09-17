@@ -1,0 +1,15 @@
+﻿@using ZXing;
+@using ZXing.Common;
+
+<input id="barcode-input" height="@Height" width="@Width" name="barcode" type="file" accept="image/*" capture="@(front ? "user" : "environment")">
+
+@code {
+    [Parameter] public int Height { get; set; } = 786;
+    [Parameter] public int Width { get; set; } = 786;
+    private bool front { get; set; } = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+    }
+}

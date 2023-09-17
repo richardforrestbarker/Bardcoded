@@ -1,0 +1,23 @@
+{
+  "fileLocation": "C:\\Users\\Mr. HubbyManFace\\source\\repos\\BardCoded\\Tests\\",
+  "expected": {
+    "testcode-a.txt": {
+      "Text": "360505257898",
+      "BarcodeFormat": "UPC_A",
+      "ResultMetadata": {
+        "POSSIBLE_COUNTRY": "US",
+        "SYMBOLOGY_IDENTIFIER": "]E0",
+        "ORIENTATION": 0
+      }
+    },
+    "testcode-b.txt": {
+      "Text": "769498031919",
+      "BarcodeFormat": "UPC_A",
+      "ResultMetadata": {
+        "POSSIBLE_COUNTRY": "US/CA",
+        "SYMBOLOGY_IDENTIFIER": "]E0",
+        "ORIENTATION": 0
+      }
+    }
+  }
+}
