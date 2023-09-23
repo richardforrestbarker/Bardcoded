@@ -1,4 +1,5 @@
-﻿using Microsoft.JSInterop;
+﻿using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using System.Diagnostics.CodeAnalysis;
 using ZXing;
 using ZXing.Common;
@@ -7,17 +8,32 @@ namespace BardCoded
 {
     public class BarcodeResult
     {
-        [JSInvokable(nameof(translate))]
-        public static BarcodeResult translate(String imageAsBase64, String type)
+        
+        public static BarcodeResult translateFromBase64(String imageAsBase64, String type)
         {
-            BarcodeResult result = new BarcodeResult();
+           
             var data = Convert.FromBase64String(imageAsBase64);
+            return translate(data, type);
+        }
+
+        [JSInvokable(nameof(translate))]
+        public static BarcodeResult translate(byte[] data, string type)
+        {
+            Console.WriteLine($"translating a {data.Length} byte(s) of an image");
             using (var image = Image.Load<Rgba32>(data))
             {
+                BarcodeResult result = new BarcodeResult();
                 var decoded = result.DecodeFrom(image);
                 if (decoded == null) return null;
+                Console.WriteLine($"Decoded a bardcode: {decoded.Text}");
                 return result.mapFrom(decoded);
             }
+        }
+
+        [JSInvokable(nameof(translateAsync))]
+        public static Task<BarcodeResult> translateAsync(byte[] data, string type)
+        {
+            return Task.Run(() => translate(data, type));
         }
 
         public string Text { get; set; }

@@ -1,5 +1,135 @@
 ﻿@page "/"
 
-Camera opens straight away
-<br />
-<Barcode />
+@using System.Diagnostics.CodeAnalysis;
+@using ZXing.Common;
+@using ZXing;
+@if (loading)
+{
+    <Spinner Id="image-loader" />
+    return;
+}
+@if (Result != null)
+{
+    <div>@Result.Text<br /><small>@Result.BarcodeFormat</small></div>
+    <div>
+        @foreach (var meta in Result.ResultMetadata)
+        {
+            <div>
+                @meta.Key = @meta.Value
+            </div>
+        }
+    </div>
+}
+<div>
+    <button type="button" @onclick="ToggleVideo" class=@(useVideo ? "btn-primary" : "btn-secondary")>
+        @(useVideo ? "Camera" : "File")
+    </button>
+    @if (Error != null)
+    {
+        <p><span id="errorMsg">@Error</span></p>
+    }
+    else if (useVideo)
+    {
+        <video height="@Height" width="@Width" id="barcode" controls playsinline autoplay alt="Webcam video stream"></video>
+        <canvas id="buffer" style="display:none"></canvas>
+        <button type="button" @onclick="VideoScreenshot">Snap Photo</button>
+    }
+    else
+    {
+        <InputFile 
+            OnChange="c=>Changed(c)" 
+            AdditionalAttributes="adds" />
+    }
+</div>
+
+
+@code {
+    [Inject] public IJSRuntime js { get; set; }
+    [Parameter] public int Height { get; set; } = 720;
+    [Parameter] public int Width { get; set; } = 1280;
+    private BarcodeResult Result { get; set; } = null;
+    private bool useVideo = false;
+    private bool videoInitialized = false;
+    private Dictionary<String, object?> adds = new Dictionary<string, object?>()
+    {
+        {"accepts", "image/*"},
+        {"capture", "environment"}
+    };
+
+    private String Error { get; set; } = null;
+    private bool loading { get; set; } = false;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await js.InvokeVoidAsync("window.Bardcoded.construct", Height, Width);
+        }
+        if (useVideo && !videoInitialized)
+        {
+            await js.InvokeVoidAsync("window.Bardcoded.camera.initialize");
+            videoInitialized = true;
+        }
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+    private async void ToggleVideo()
+    {
+        useVideo = !useVideo;
+        if (Result != null) Result = null;
+        if (!useVideo)
+        {
+            await js.InvokeVoidAsync("window.Bardcoded.camera.stop");
+            videoInitialized = false;
+        }
+        StateHasChanged();
+    }
+
+    public async void VideoScreenshot(MouseEventArgs mouse)
+    {
+        var base64Photo = await js.InvokeAsync<String>("window.Bardcoded.camera.takePhoto");
+        var split = base64Photo.Split(",");
+        var type = split[0];
+        var data = split[1];
+        var result = BarcodeResult.translateFromBase64(data, type);
+        if (result != null) Result = result;
+        else Console.WriteLine("Failed to read that image.");
+    }
+
+    public async void Changed(InputFileChangeEventArgs change)
+    {
+
+        if (change.FileCount != 1)
+        {
+            Error = "Only one file at a time.";
+            StateHasChanged();
+            return;
+        }
+        if (change.FileCount == 0 || change.File == null)
+        {
+            Error = "Select a file. . .";
+            StateHasChanged();
+            return;
+        }
+
+
+
+        using (var stream = change.File.OpenReadStream(maxAllowedSize: Height * Width * 4 + 512000))
+        using (MemoryStream fs = new MemoryStream())
+        {
+            if (stream.Length == 0)
+            {
+                Error = "No 0 size files.";
+                StateHasChanged();
+                return;
+            }
+            var bytes = new byte[stream.Length];
+            loading = true;
+            StateHasChanged();
+            await stream.ReadAsync(bytes, 0, bytes.Length);
+            Result = await BarcodeResult.translateAsync(bytes, "image");
+            loading = false;
+            StateHasChanged();
+        }
+    }
+}

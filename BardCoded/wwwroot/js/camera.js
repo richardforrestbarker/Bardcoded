@@ -1,67 +1,89 @@
 ﻿
-window.camera_interval = null;
-// Basic settings for the video to get from Webcam
-window.camera = (height, width, elementSelector = "video#barcode", bufferSelector = "canvas#buffer") => {
-    const video = document.querySelector(elementSelector);
-    const canvas = document.querySelector(bufferSelector);
-    var tryTanslate = async () => {
-        const context = canvas.getContext("2d");
-        if (width && height) {
-            canvas.width = width;
-            canvas.height = height;
-            context.drawImage(video, 0, 0, width, height);
 
-            const data = canvas.toDataURL("image/png");
-
-            var assName = "BardCoded.Pages.Nonmobile_Barcode";
-
-
-            let result = await DotNet.invokeMethodAsync("BardCoded", "translate", data.split(",")[1], data.split(",")[0]);
-            console.log("It . . .", result);
-            if (result !== null) {
-                clearInterval(window.camera_interval);
-                console.log("done!");
+export class Camera {
+    canvas;
+    width;
+    height;
+    constraints;
+    initialized = false;
+    constructor(height, width) {
+        this.height = height;
+        this.width = width;
+        this.constraints = {
+            audio: false,
+            video: {
+                mandatory: {
+                    minWidth: this.height,
+                    minHeight: this.width
+                }
             }
-
-        } else {
-            const context = canvas.getContext("2d");
-            context.fillStyle = "#AAA";
-            context.fillRect(0, 0, canvas.width, canvas.height);
-
-            const data = canvas.toDataURL("image/png");
-            photo.setAttribute("src", data);
         }
     }
 
-    var constraints = {
-        video: {
-            mandatory: {
-                minWidth: 1280,
-                minHeight: 1280
-            }
+    takePhoto = () => {
+        if (!this.initialized) {
+            console.log("Camera not initialized.");
+            return;
         }
-    };
-
-    function stop(e) {
-        const stream = video.srcObject;
-        const tracks = stream.getTracks();
-
-        for (let i = 0; i < tracks.length; i++) {
-            const track = tracks[i];
-            track.stop();
+        const context = this.canvas.getContext("2d");
+        if (this.width && this.height) {
+            this.canvas.width = this.width;
+            this.canvas.height = this.height;
+            // this will let us cut the photo down when we need to.
+            context.drawImage(this.video, 0, 0, this.width, this.height, 0, 0, this.width, this.height);
+            return this.canvas.toDataURL("image/png");
         }
-        video.srcObject = null;
+        return null;
+
     }
-    // This condition will ask permission to user for Webcam access
-    if (navigator.mediaDevices.getUserMedia) {
-        navigator.mediaDevices.getUserMedia(constraints)
-            .then(function (stream) {
-                video.srcObject = stream;
-                window.camera_interval = setInterval(tryTanslate, 50 );
-            })
-            .catch(function (err0r) {
-                console.log("Something went wrong!");
-            });
+
+    initialize = (elementSelector = "video#barcode", bufferSelector = "canvas#buffer") => {
+        if (!navigator.mediaDevices.getUserMedia) {
+            throw Error("Only desktops use should this function.");
+        }
+        this.video = document.querySelector(elementSelector);
+        this.canvas = document.querySelector(bufferSelector);
+
+        
+        navigator.mediaDevices.getUserMedia(this.constraints)
+            .then(this.handleStream)
+            .catch(this.handleError);
+        /* Legacy code below: getUserMedia
+    else if(navigator.getUserMedia) { // Standard
+    navigator.getUserMedia({ video: true }, function(stream) {
+    video.src = stream;
+    video.play();
+    }, errBack);
+    } else if(navigator.webkitGetUserMedia) { // WebKit-prefixed
+    navigator.webkitGetUserMedia({ video: true }, function(stream){
+    video.src = window.webkitURL.createObjectURL(stream);
+    video.play();
+    }, errBack);
+    } else if(navigator.mozGetUserMedia) { // Mozilla-prefixed
+    navigator.mozGetUserMedia({ video: true }, function(stream){
+    video.srcObject = stream;
+    video.play();
+    }, errBack);
+    }
+    */
+        this.initialized = true;
+    }
+
+    handleStream = (stream) => {
+        this.video.srcObject = stream;
+        this.video.play();
+    }
+
+    handleError = (error) => {
+        console.error("Something went wrong!", error);
+    }
+
+    stop = () => {
+        this.initialized = false;
+        if (!this.video) return;
+        var stream = this.video.srcObject;
+        if (!stream) return;
+        (stream.getTracks() || []).forEach(t => t.stop());
+        this.video.srcObject = null;
     }
 }
-

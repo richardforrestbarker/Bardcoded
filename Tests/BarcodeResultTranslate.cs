@@ -10,10 +10,10 @@ namespace Tests
     /// These tests are written entirely in C#.
     /// Learn more at https://bunit.dev/docs/getting-started/writing-tests.html#creating-basic-tests-in-cs-files
     /// </summary>
-    public class CounterCSharpTests : TestContext
+    public class BarcodeResultTranslate : TestContext
     {
         [Fact]
-        public void CounterStartsAtZero()
+        public void CanActuallyParseBase64Barcodes()
         {
             var testDataFile = File.ReadAllText("test_data.json");
             var testData = JsonConvert.DeserializeObject<Testdata>(testDataFile);
@@ -21,12 +21,11 @@ namespace Tests
             
             foreach(var item in testData.expected) {
                 var image = File.ReadAllText($"{testData.fileLocation}/{item.Key}");
-                var actual = BardCoded.BarcodeResult.translate(image, type);
+                var actual = BarcodeResult.translateFromBase64(image, type);
                 Assert.Equivalent(item.Value, actual);
             }
-
-            
         }
+
     }
 
     public class Testdata

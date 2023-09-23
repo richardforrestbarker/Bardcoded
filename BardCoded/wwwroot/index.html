@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>BardCoded</title>
+    <title>Bard Coded</title>
     <base href="/" />
     <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet" />
     <link href="css/app.css" rel="stylesheet" />
@@ -14,7 +14,9 @@
     <link href="manifest.json" rel="manifest" />
     <link rel="apple-touch-icon" sizes="512x512" href="icon-512.png" />
     <link rel="apple-touch-icon" sizes="192x192" href="icon-192.png" />
-    <script src="js/camera.js"></script>
+
+
+    
 </head>
 
 <body>
@@ -32,9 +34,23 @@
         <a class="dismiss">🗙</a>
     </div>
 
+    <script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
     <script src="_framework/blazor.webassembly.js"></script>
     <script>navigator.serviceWorker.register('service-worker.js');</script>
-    
+    <script type="importmap">
+        {
+            "imports": {
+                "camera": "./js/camera.js"
+            }
+        }
+    </script>
+    <script type="module" language="javascript">
+        import { Camera } from 'camera';
+        window.Bardcoded = {
+            camera: null,
+            construct: (h, w) => this.camera = new Camera(h, w),
+        };
+    </script>
 </body>
 
 </html>
