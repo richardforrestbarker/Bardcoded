@@ -7,7 +7,10 @@ variables:
   NUGET_PACKAGES_DIRECTORY: '.nuget'
   # 3) A relative path to the source code from project repository root.
   # NOTE: Please edit this path so it matches the structure of your project!
-  SOURCE_CODE_PATH: '*/*/'
+  SOURCE_CODE_PATH: 'Barcoded/'
+
+  SSH_DEPLOY_TARGET_HOST: 'user@192.168.1.101'
+  SSH_DEPLOY_TARGET_ROOT_DIR: '/home/user/Bardcoded'
 
 # ### Define global cache rule
 #
@@ -67,14 +70,6 @@ before_script:
 
 build:
   stage: build
-  # ### Build all projects discovered from solution file.
-  #
-  # Note: this will fail if you have any projects in your solution that are not
-  # .NET Core-based projects (e.g. WCF service), which is based on .NET Framework,
-  # not .NET Core. In this scenario, you will need to build every .NET Core-based
-  # project by explicitly specifying a relative path to the directory
-  # where it is located (e.g. 'dotnet build ./src/ConsoleApp').
-  # Only one project path can be passed as a parameter to 'dotnet build' command.
   script:
     - 'dotnet build --no-restore'
 
@@ -89,9 +84,21 @@ tests:
   # You may want to define separate testing jobs for different types of testing
   # (e.g. integration tests, unit tests etc).
   script:
-    - 'BC-TEST-DATA="{\r\n  \"fileLocation\": \"\",\r\n  \"expected\": {\r\n    \"testcode-a.txt\": {\r\n      \"Text\": \"360505257898\",\r\n      \"BarcodeFormat\": \"UPC_A\",\r\n      \"ResultMetadata\": {\r\n        \"POSSIBLE_COUNTRY\": \"US\",\r\n        \"SYMBOLOGY_IDENTIFIER\": \"]E0\",\r\n        \"ORIENTATION\": 0\r\n      }\r\n    },\r\n    \"testcode-b.txt\": {\r\n      \"Text\": \"769498031919\",\r\n      \"BarcodeFormat\": \"UPC_A\",\r\n      \"ResultMetadata\": {\r\n        \"POSSIBLE_COUNTRY\": \"US/CA\",\r\n        \"SYMBOLOGY_IDENTIFIER\": \"]E0\",\r\n        \"ORIENTATION\": 0\r\n      }\r\n    }\r\n  }\r\n}" dotnet test --no-restore'
+    - 'export BC-TEST-DATA="{\r\n  \"fileLocation\": \"\",\r\n  \"expected\": {\r\n    \"testcode-a.txt\": {\r\n      \"Text\": \"360505257898\",\r\n      \"BarcodeFormat\": \"UPC_A\",\r\n      \"ResultMetadata\": {\r\n        \"POSSIBLE_COUNTRY\": \"US\",\r\n        \"SYMBOLOGY_IDENTIFIER\": \"]E0\",\r\n        \"ORIENTATION\": 0\r\n      }\r\n    },\r\n    \"testcode-b.txt\": {\r\n      \"Text\": \"769498031919\",\r\n      \"BarcodeFormat\": \"UPC_A\",\r\n      \"ResultMetadata\": {\r\n        \"POSSIBLE_COUNTRY\": \"US/CA\",\r\n        \"SYMBOLOGY_IDENTIFIER\": \"]E0\",\r\n        \"ORIENTATION\": 0\r\n      }\r\n    }\r\n  }\r\n}"'
+    - 'dotnet test --no-restore'
 
 deploy:
   stage: deploy
-  script: echo "Define your deployment script! You haven't done this yet!"
+  needs: ["test", "build"]
+  script: 
+   - ssh $SSH_DEPLOY_TARGET_HOST 'export GREEN_DIR=/home/user/bardcoded/green'
+   - ssh $SSH_DEPLOY_TARGET_HOST 'export BLUE_DIR=/home/user/bardcoded/blue'
+   - ssh $SSH_DEPLOY_TARGET_HOST 'rm -rf $GREEN_DIR/*'
+   - dotnet publish --configuration Release --output $SOURCE_CODE_PATH/publish;
+   - tar cf - $SOURCE_CODE_PATH/publish && ssh $SSH_DEPLOY_TARGET_HOST 'tar xfC - $GREEN_DIR'
+
+   ## later we'll flip it to blue
+
+
   environment: production
+  
