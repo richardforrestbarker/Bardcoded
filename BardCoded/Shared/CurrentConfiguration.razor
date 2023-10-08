@@ -1,0 +1,30 @@
+﻿<div class="col">
+    <p class="p-0 m-0">
+        <small>API&nbsp;Host:</small><a class="ps-2 d-inline" href="@(BardcodedApi.BaseAddress)swagger/index.html">@BardcodedApi.BaseAddress</a>
+    </p>
+    
+    <p class="p-0 m-0">
+        <small>Api&nbsp;is</small><span class="ps-2 @(isUp ? "text-success" : "text-danger")" role="status">@(isUp ? "UP" : "DOWN")</span>
+    </p>
+</div>
+
+
+
+@code {
+    [Inject] public BardcodedApiConfiguration BardcodedApi { get; set; }
+    [Inject] public ApiClient Http { get; set; }
+    private bool isUp = false;
+
+
+    protected async override Task OnInitializedAsync()
+    {
+        isUp = await healthcheck();
+        await base.OnInitializedAsync();
+    }
+
+    public async Task<bool> healthcheck()
+    {
+        var response = await Http.Healthcheck();
+        return response.IsUp;
+    }
+}

@@ -3,9 +3,20 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33723.286
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BardCoded", "BardCoded\BardCoded.csproj", "{7A0DC3E3-D5E1-489F-901F-D81681674B30}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bardcoded", "BardCoded\Bardcoded.csproj", "{7A0DC3E3-D5E1-489F-901F-D81681674B30}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "Tests\Tests.csproj", "{536A6CDA-C11F-4972-8AA1-B710111FBC02}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bardcoded.Tests", "Tests\Bardcoded.Tests.csproj", "{536A6CDA-C11F-4972-8AA1-B710111FBC02}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{35A8735D-AC0E-4072-9B17-B5CAB3217AF9}"
+	ProjectSection(SolutionItems) = preProject
+		.gitlab-ci.yml = .gitlab-ci.yml
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bardcoded.API", "Bardcoded.API\Bardcoded.API.csproj", "{333FE605-1253-4EA4-81EE-470200AFBFEB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bardcoded.API.Tests", "Bardcoded.API.Tests\Bardcoded.API.Tests.csproj", "{DE3E1C8B-1076-4AE9-A4F0-69525A291252}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bardcoded.Data", "Bardcoded.Data\Bardcoded.Data.csproj", "{064DCEE7-3231-4715-B290-E64172ADE48D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +32,18 @@ Global
 		{536A6CDA-C11F-4972-8AA1-B710111FBC02}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{536A6CDA-C11F-4972-8AA1-B710111FBC02}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{536A6CDA-C11F-4972-8AA1-B710111FBC02}.Release|Any CPU.Build.0 = Release|Any CPU
+		{333FE605-1253-4EA4-81EE-470200AFBFEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{333FE605-1253-4EA4-81EE-470200AFBFEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{333FE605-1253-4EA4-81EE-470200AFBFEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{333FE605-1253-4EA4-81EE-470200AFBFEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE3E1C8B-1076-4AE9-A4F0-69525A291252}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE3E1C8B-1076-4AE9-A4F0-69525A291252}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE3E1C8B-1076-4AE9-A4F0-69525A291252}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE3E1C8B-1076-4AE9-A4F0-69525A291252}.Release|Any CPU.Build.0 = Release|Any CPU
+		{064DCEE7-3231-4715-B290-E64172ADE48D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{064DCEE7-3231-4715-B290-E64172ADE48D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{064DCEE7-3231-4715-B290-E64172ADE48D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{064DCEE7-3231-4715-B290-E64172ADE48D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

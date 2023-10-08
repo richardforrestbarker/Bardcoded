@@ -4,8 +4,8 @@ using System.Diagnostics.CodeAnalysis;
 using ZXing;
 using ZXing.Common;
 
-namespace BardCoded
-{
+namespace Bardcoded
+{ 
     public class BarcodeResult
     {
         
@@ -30,10 +30,30 @@ namespace BardCoded
             }
         }
 
+        [JSInvokable(nameof(translateFromStream))]
+        public static BarcodeResult translateFromStream(Stream data, string type)
+        {
+            Console.WriteLine($"translating a {data.Length} byte(s) of an image");
+            using (var image = Image.Load<Rgba32>(data))
+            {
+                BarcodeResult result = new BarcodeResult();
+                var decoded = result.DecodeFrom(image);
+                if (decoded == null) return null;
+                Console.WriteLine($"Decoded a bardcode: {decoded.Text}");
+                return result.mapFrom(decoded);
+            }
+        }
+
         [JSInvokable(nameof(translateAsync))]
         public static Task<BarcodeResult> translateAsync(byte[] data, string type)
         {
             return Task.Run(() => translate(data, type));
+        }
+
+        [JSInvokable(nameof(translateFromStreamAsync))]
+        public static Task<BarcodeResult> translateFromStreamAsync(Stream data, string type)
+        {
+            return Task.Run(() => translateFromStream(data, type));
         }
 
         public string Text { get; set; }

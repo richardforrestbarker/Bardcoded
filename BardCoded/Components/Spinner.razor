@@ -1,0 +1,43 @@
+﻿@*<style>
+    @@keyframes spin {
+        0% {
+            transform: rotate(0deg)
+        }
+
+        100% {
+            transform: rotate(360deg)
+        }
+    }
+</style>
+<div class="container" 
+    style="border: 16px solid silver;border-top: 16px solid #337AB7;border-radius: 50%;width: 80px;height: 80px; top: 40%;left: 55%;position: absolute;">
+    
+    <div class="row" id="spinner-@Id"
+         style="border: 16px solid silver;border-top: 16px solid #337AB7;border-radius: 50%;width: 80px;height: 80px; animation: spin 700ms linear infinite;top: 40%;left: 55%;position: absolute;">
+    </div>
+    
+    <div class="row" id="spinner-message-@Id">
+       
+    </div>
+</div>
+*@
+<svg class="loading-progress">
+    <circle r="40%" cx="50%" cy="50%" />
+    <circle r="40%" cx="50%" cy="50%" />
+</svg>
+<div class="loading-progress-text">
+    @if (ChildContent == null)
+    {
+        <p>Loading. . .</p>
+    }
+    else
+    {
+        @ChildContent
+    }
+</div>
+
+
+@code {
+    [Parameter] public String Id { get; set; }
+    [Parameter] public RenderFragment ChildContent { get; set; }
+}

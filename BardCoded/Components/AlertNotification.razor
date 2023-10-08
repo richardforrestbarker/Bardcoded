@@ -1,0 +1,13 @@
+﻿<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    @Header
+    @Message
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+
+@code {
+    [Parameter] public RenderFragment Header { get; set; } 
+    [Parameter] public RenderFragment Message { get; set; } 
+}
