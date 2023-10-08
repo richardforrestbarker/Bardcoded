@@ -1,0 +1,10 @@
+{
+  "success": false,
+  "error": {
+    "message": "Your API Key is invalid. Please check the format.",
+    "endpoint": "product",
+    "query": "5000347070761",
+    "apikey": false
+  },
+  "timestamp": 1696020475
+}

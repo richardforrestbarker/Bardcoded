@@ -1,0 +1,330 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\Mr. HubbyManFace\\source\\repos\\BardCoded\\Bardcoded.API.Tests\\Bardcoded.API.Tests.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\Mr. HubbyManFace\\source\\repos\\BardCoded\\Bardcoded.API.Tests\\Bardcoded.API.Tests.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Mr. HubbyManFace\\source\\repos\\BardCoded\\Bardcoded.API.Tests\\Bardcoded.API.Tests.csproj",
+        "projectName": "Bardcoded.API.Tests",
+        "projectPath": "C:\\Users\\Mr. HubbyManFace\\source\\repos\\BardCoded\\Bardcoded.API.Tests\\Bardcoded.API.Tests.csproj",
+        "packagesPath": "C:\\Users\\Mr. HubbyManFace\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Mr. HubbyManFace\\source\\repos\\BardCoded\\Bardcoded.API.Tests\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Mr. HubbyManFace\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {
+              "C:\\Users\\Mr. HubbyManFace\\source\\repos\\BardCoded\\Bardcoded.API\\Bardcoded.API.csproj": {
+                "projectPath": "C:\\Users\\Mr. HubbyManFace\\source\\repos\\BardCoded\\Bardcoded.API\\Bardcoded.API.csproj"
+              },
+              "C:\\Users\\Mr. HubbyManFace\\source\\repos\\BardCoded\\Bardcoded.Data\\Bardcoded.Data.csproj": {
+                "projectPath": "C:\\Users\\Mr. HubbyManFace\\source\\repos\\BardCoded\\Bardcoded.Data\\Bardcoded.Data.csproj"
+              },
+              "C:\\Users\\Mr. HubbyManFace\\source\\repos\\BardCoded\\BardCoded\\Bardcoded.csproj": {
+                "projectPath": "C:\\Users\\Mr. HubbyManFace\\source\\repos\\BardCoded\\BardCoded\\Bardcoded.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "Microsoft.NET.Test.Sdk": {
+              "target": "Package",
+              "version": "[17.7.2, )"
+            },
+            "coverlet.collector": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "xunit": {
+              "target": "Package",
+              "version": "[2.5.1, )"
+            },
+            "xunit.runner.visualstudio": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.5.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100-preview.4.23260.5\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Mr. HubbyManFace\\source\\repos\\BardCoded\\Bardcoded.API\\Bardcoded.API.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Mr. HubbyManFace\\source\\repos\\BardCoded\\Bardcoded.API\\Bardcoded.API.csproj",
+        "projectName": "Bardcoded.API",
+        "projectPath": "C:\\Users\\Mr. HubbyManFace\\source\\repos\\BardCoded\\Bardcoded.API\\Bardcoded.API.csproj",
+        "packagesPath": "C:\\Users\\Mr. HubbyManFace\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Mr. HubbyManFace\\source\\repos\\BardCoded\\Bardcoded.API\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Mr. HubbyManFace\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\sdk\\8.0.100-preview.4.23260.5\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {
+              "C:\\Users\\Mr. HubbyManFace\\source\\repos\\BardCoded\\Bardcoded.Data\\Bardcoded.Data.csproj": {
+                "projectPath": "C:\\Users\\Mr. HubbyManFace\\source\\repos\\BardCoded\\Bardcoded.Data\\Bardcoded.Data.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.OpenApi": {
+              "target": "Package",
+              "version": "[7.0.11, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[7.0.11, )"
+            },
+            "Microsoft.FeatureManagement.AspNetCore": {
+              "target": "Package",
+              "version": "[2.6.1, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.5.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100-preview.4.23260.5\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Mr. HubbyManFace\\source\\repos\\BardCoded\\Bardcoded.Data\\Bardcoded.Data.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Mr. HubbyManFace\\source\\repos\\BardCoded\\Bardcoded.Data\\Bardcoded.Data.csproj",
+        "projectName": "Bardcoded.Data",
+        "projectPath": "C:\\Users\\Mr. HubbyManFace\\source\\repos\\BardCoded\\Bardcoded.Data\\Bardcoded.Data.csproj",
+        "packagesPath": "C:\\Users\\Mr. HubbyManFace\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Mr. HubbyManFace\\source\\repos\\BardCoded\\Bardcoded.Data\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Mr. HubbyManFace\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100-preview.4.23260.5\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Mr. HubbyManFace\\source\\repos\\BardCoded\\BardCoded\\Bardcoded.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Mr. HubbyManFace\\source\\repos\\BardCoded\\BardCoded\\Bardcoded.csproj",
+        "projectName": "Bardcoded",
+        "projectPath": "C:\\Users\\Mr. HubbyManFace\\source\\repos\\BardCoded\\BardCoded\\Bardcoded.csproj",
+        "packagesPath": "C:\\Users\\Mr. HubbyManFace\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Mr. HubbyManFace\\source\\repos\\BardCoded\\BardCoded\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Mr. HubbyManFace\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {
+              "C:\\Users\\Mr. HubbyManFace\\source\\repos\\BardCoded\\Bardcoded.Data\\Bardcoded.Data.csproj": {
+                "projectPath": "C:\\Users\\Mr. HubbyManFace\\source\\repos\\BardCoded\\Bardcoded.Data\\Bardcoded.Data.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Components.WebAssembly": {
+              "target": "Package",
+              "version": "[7.0.11, )"
+            },
+            "Microsoft.AspNetCore.Components.WebAssembly.DevServer": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[7.0.11, )"
+            },
+            "Microsoft.NET.ILLink.Tasks": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[7.0.100-1.23062.2, )",
+              "autoReferenced": true
+            },
+            "Microsoft.NET.Sdk.WebAssembly.Pack": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.0-preview.4.23259.5, )",
+              "autoReferenced": true
+            },
+            "SixLabors.ImageSharp": {
+              "target": "Package",
+              "version": "[3.0.2, )"
+            },
+            "ZXing.Net": {
+              "target": "Package",
+              "version": "[0.16.9, )"
+            },
+            "ZXing.Net.Bindings.ImageSharp.V2": {
+              "target": "Package",
+              "version": "[0.16.15, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100-preview.4.23260.5\\RuntimeIdentifierGraph.json"
+        }
+      },
+      "runtimes": {
+        "browser-wasm": {
+          "#import": []
+        }
+      }
+    }
+  }
+}

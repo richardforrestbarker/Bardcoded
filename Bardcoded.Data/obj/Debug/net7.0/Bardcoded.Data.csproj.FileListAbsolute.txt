@@ -1,0 +1,13 @@
+C:\Users\Mr. HubbyManFace\source\repos\BardCoded\Bardcoded.Data\bin\Debug\net7.0\Bardcoded.Data.deps.json
+C:\Users\Mr. HubbyManFace\source\repos\BardCoded\Bardcoded.Data\bin\Debug\net7.0\Bardcoded.Data.dll
+C:\Users\Mr. HubbyManFace\source\repos\BardCoded\Bardcoded.Data\bin\Debug\net7.0\Bardcoded.Data.pdb
+C:\Users\Mr. HubbyManFace\source\repos\BardCoded\Bardcoded.Data\obj\Debug\net7.0\Bardcoded.Data.csproj.AssemblyReference.cache
+C:\Users\Mr. HubbyManFace\source\repos\BardCoded\Bardcoded.Data\obj\Debug\net7.0\Bardcoded.Data.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Mr. HubbyManFace\source\repos\BardCoded\Bardcoded.Data\obj\Debug\net7.0\Bardcoded.Data.AssemblyInfoInputs.cache
+C:\Users\Mr. HubbyManFace\source\repos\BardCoded\Bardcoded.Data\obj\Debug\net7.0\Bardcoded.Data.AssemblyInfo.cs
+C:\Users\Mr. HubbyManFace\source\repos\BardCoded\Bardcoded.Data\obj\Debug\net7.0\Bardcoded.Data.csproj.CoreCompileInputs.cache
+C:\Users\Mr. HubbyManFace\source\repos\BardCoded\Bardcoded.Data\obj\Debug\net7.0\Bardcoded.Data.sourcelink.json
+C:\Users\Mr. HubbyManFace\source\repos\BardCoded\Bardcoded.Data\obj\Debug\net7.0\Bardcoded.Data.dll
+C:\Users\Mr. HubbyManFace\source\repos\BardCoded\Bardcoded.Data\obj\Debug\net7.0\refint\Bardcoded.Data.dll
+C:\Users\Mr. HubbyManFace\source\repos\BardCoded\Bardcoded.Data\obj\Debug\net7.0\Bardcoded.Data.pdb
+C:\Users\Mr. HubbyManFace\source\repos\BardCoded\Bardcoded.Data\obj\Debug\net7.0\ref\Bardcoded.Data.dll

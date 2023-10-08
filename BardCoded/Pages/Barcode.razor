@@ -1,0 +1,51 @@
+﻿@page "/item/{Bard}"
+@using Bardcoded.Data.Responses;
+
+@if (loading)
+{
+    <Bardcoded.Components.Spinner />
+    return;
+}
+else if (item == null)
+{
+    Console.WriteLine("The was an unknown barcode. Redirecting to item list.");
+    navman.NavigateTo("item/all");
+}
+else
+{
+    <div>
+        <h1>@item.Name</h1> <p>@item.Description</p>
+        <img src="data:image/@item.ImageType;base64,@item.ImageAsBase64" />
+    </div>
+}
+
+
+
+@code {
+    [Parameter] public string Bard { get; set; }
+    [Inject] public ApiClient Client { get; set; }
+    [Inject] public NavigationManager navman { get; set; }
+    private BarcodeView? item { get; set; }
+    private bool loading { get; set; } = true;
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            if(Bard == null || Bard.Equals(string.Empty))
+            {
+                navman.NavigateTo("item/all");
+            }
+            try
+            {
+                item = (await Client.GetItem(Bard));
+            }
+            catch (ApiErrorResponseException apiError)
+            {
+                Console.WriteLine("Api returned an error.", apiError);
+            }
+            loading = false;
+            StateHasChanged();
+        }
+        await base.OnAfterRenderAsync(firstRender);
+    }
+}

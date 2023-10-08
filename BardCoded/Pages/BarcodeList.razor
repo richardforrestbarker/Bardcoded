@@ -1,0 +1,23 @@
+﻿@page "/item/all"
+@using Bardcoded.Data.Responses;
+
+
+@foreach(var item in Barcodes ?? new List<BarcodeView>())
+{
+    <div>
+        <h1><a href="/item/@item.Code">@item.Name</a></h1> <p>@item.Description</p>
+        <img src="data:image/@item.ImageType;base64,@item.ImageAsBase64" />
+    </div>
+}
+
+
+@code {
+    [Inject] public ApiClient Client { get; set; }
+    private List<BarcodeView> Barcodes { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        var result = (await Client.GetItems());
+        Barcodes = result ?? new List<BarcodeView>();
+       await base.OnInitializedAsync();
+    }
+}

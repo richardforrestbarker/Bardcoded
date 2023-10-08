@@ -1,4 +1,4 @@
-using BardCoded;
+using Bardcoded;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
@@ -15,11 +15,12 @@ namespace Tests
         [Fact]
         public void CanActuallyParseBase64Barcodes()
         {
-            var testDataFile = File.ReadAllText("test_data.json");
-            var testData = JsonConvert.DeserializeObject<Testdata>(testDataFile);
+            var file = "test_data.json";
+            var fileData = System.Environment.GetEnvironmentVariable("BC-TEST-DATA") ?? File.ReadAllText(file);
+            var testData = JsonConvert.DeserializeObject<Testdata>(fileData);
             var type = "data:image/png;base64";
-            
-            foreach(var item in testData.expected) {
+
+            foreach (var item in testData.expected) {
                 var image = File.ReadAllText($"{testData.fileLocation}/{item.Key}");
                 var actual = BarcodeResult.translateFromBase64(image, type);
                 Assert.Equivalent(item.Value, actual);
@@ -30,7 +31,13 @@ namespace Tests
 
     public class Testdata
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public string fileLocation { get; set; }
+        /// <summary>
+        /// The key is the name of the file at {fileLocation}.
+        /// </summary>
         public Dictionary<string, BarcodeResult> expected { get; set; }
     }
 }
