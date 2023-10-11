@@ -1,3 +1,4 @@
+using Bardcoded.Data;
 using Bardcoded.Shaded.Microsoft.FeatureManagement;
 using Bardcoded.Shared;
 using Microsoft.AspNetCore.Components.Web;
@@ -12,16 +13,20 @@ namespace Bardcoded
         public static Task Main(string[] args)
         {
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
-            builder.Services.AddScoped<LocalStorageAccessor>();
+            builder.Services.AddScoped<CachedBarcodeLocalStorage>();
+            builder.Services.AddScoped<CreateBarcodeLocalStorage>();
 
 
             builder.Services.AddSingleton(builder.Configuration.GetRequiredSection("BardcodedApiConfig").Get<BardcodedApiConfiguration>() ?? new BardcodedApiConfiguration());
-            var features = builder.Configuration.GetRequiredSection("Application").Get<MyFeatureManager>();
-            builder.Services.AddSingleton<IFeatureManager>(features ?? new MyFeatureManager());
+            builder.Services.AddSingleton<IFeatureManager>(builder.Configuration.GetRequiredSection("Application").Get<MyFeatureManager>() ?? new MyFeatureManager());
+            
+            
+            
             builder.Services.AddTransient<ApiClient>();
             
             builder.RootComponents.Add<NavMenu>("#navmenu");
             builder.RootComponents.Add<App>("#app");
+            builder.RootComponents.Add<HeadContent>("head::after");
             builder.RootComponents.Add<HeadOutlet>("head::after");
 
             return builder.Build().RunAsync();

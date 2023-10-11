@@ -1,15 +1,16 @@
 ﻿using Bardcoded.API.Data.Requests;
 using System.Runtime.Serialization;
 
-namespace Bardcoded
+namespace Bardcoded.Exceptions
 {
     [Serializable]
     internal class DataConflictException : InvalidOperationException
     {
         public BardcodeInjestRequest? Actual { get; private set; }
 
-        public DataConflictException(string message, BardcodeInjestRequest? actual) : base(message) {
-            this.Actual = actual;
+        public DataConflictException(string message, BardcodeInjestRequest? actual) : base(message)
+        {
+            Actual = actual;
         }
     }
 }

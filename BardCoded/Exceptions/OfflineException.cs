@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace Bardcoded
+namespace Bardcoded.Exceptions
 {
     [Serializable]
     internal class OfflineException : ApplicationException

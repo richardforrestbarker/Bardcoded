@@ -1,33 +1,8 @@
 ﻿using Microsoft.JSInterop;
 using System.Text.Json;
 
-namespace Bardcoded
+namespace Bardcoded.Data
 {
-    public class LocalCacheStorage : LocalStorageAccessor
-    {
-        public LocalCacheStorage(IJSRuntime jsRuntime) : base(jsRuntime)
-        {
-        }
-        public string CacheKey { get; set; } = "bardcoded-cache";
-        //Dictionary<String, dynamic> Cache { get; set; } = new Dictionary<String, dynamic>();
-
-        public async Task push<T>(string key, T value)
-        {
-            var current = await GetValueAsync<Dictionary<string, T>>(CacheKey);
-            current[key] = value;
-            await SetValueAsync(CacheKey, current);
-        }
-
-        public async Task<T> pop<T>()
-        {
-            var current = await GetValueAsync<Dictionary<string, T>>(CacheKey);
-            var item = current.First();
-            return item.Value;
-        }
-
-    }
-
-
     public class LocalStorageAccessor : IAsyncDisposable
     {
         private Lazy<IJSObjectReference> _accessorJsRef = new();

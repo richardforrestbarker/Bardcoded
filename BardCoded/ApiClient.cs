@@ -1,6 +1,5 @@
 ﻿using Bardcoded.API.Data.Requests;
 using Bardcoded.Data.Responses;
-using Bardcoded.Shaded.Microsoft.AspNetCore.Mvc;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text.Encodings.Web;
@@ -8,25 +7,29 @@ using System.Text.Json;
 using System.Net;
 using Bardcoded.API.Data;
 using Bardcoded.Shaded.Microsoft.FeatureManagement;
+using Bardcoded.Data;
+using Bardcoded.Shaded;
+using Bardcoded.Exceptions;
+using Bardcoded.Shaded.Microsoft.AspNetCore.Mvc;
 
 namespace Bardcoded
 {
     public class ApiClient : HttpClient, IAsyncDisposable
     {
-        private const string CachedBardsKey = "cachedBards";
-        private const string CreateRequestsLocalStorageKey = "createRequests";
 
-        public ApiClient(BardcodedApiConfiguration config, LocalStorageAccessor LocalStorageAccessor, IFeatureManager features)
+
+        public ApiClient(BardcodedApiConfiguration config, CachedBarcodeLocalStorage known, CreateBarcodeLocalStorage create)
         {
             Config = config;
-            this.LocalStorageAccessor = LocalStorageAccessor;
-            Features = features;
+            Known = known;
+            Create = create;
             BaseAddress = new Uri(config.BaseAddress);
         }
 
         public BardcodedApiConfiguration Config { get; }
         public LocalStorageAccessor LocalStorageAccessor { get; }
-        public IFeatureManager Features { get; }
+        public CachedBarcodeLocalStorage Known { get; }
+        public CreateBarcodeLocalStorage Create { get; }
 
         public async Task<BarcodeView?> CreateItem(BardcodeInjestRequest data)
         {
@@ -38,7 +41,7 @@ namespace Bardcoded
             {
                 Console.WriteLine($"Encountered an error. {ex}");
                 // the server is unreachable for some reason... is it down? is something in the way? does the device have internet?
-                await TryAddToLocalStorage(data);
+                await Create.TryAddToLocalStorage(data);
                 throw new OfflineException("Cannot create that until the app is back online. The create request has been cached on the device and will be added as soon as the app is back online.");
             }
             try
@@ -57,21 +60,6 @@ namespace Bardcoded
             }
         }
 
-        private async Task TryAddToLocalStorage(BardcodeInjestRequest data)
-        {
-            if (!await Features.IsEnabledAsync("UseLocalStorage"))
-            {
-                Console.WriteLine("Not using local storage.");
-            }
-            Dictionary<string, BardcodeInjestRequest> createRequests = await LocalStorageAccessor.GetValueAsync<Dictionary<String, BardcodeInjestRequest>>(CreateRequestsLocalStorageKey) ?? new Dictionary<string, BardcodeInjestRequest>();
-            if (createRequests.TryGetValue(data.Bard, out BardcodeInjestRequest? exists))
-            {
-                throw new DataConflictException("That barcode is already cached and ready to be stored when the app is back online.", exists);
-            }
-            createRequests[data.Bard] = data;
-            await LocalStorageAccessor.SetValueAsync("createRequests", createRequests);
-        }
-
         public async Task<BarcodeView?> GetItem(String bard)
         {
             HttpResponseMessage response;
@@ -83,7 +71,7 @@ namespace Bardcoded
             catch (Exception ex)
             {
                 Console.WriteLine($"Encountered an error. {ex}");
-                item = await TryGetItemFromLocalStorage(bard);
+                item = await Known.TryGetItemFromLocalStorage(bard);
                 if (item != null)
                 {
                     Console.WriteLine($"Encountered an error calling the api but found that one in the cache.");
@@ -95,7 +83,7 @@ namespace Bardcoded
             if (!response.IsSuccessStatusCode)
             {
                 var res = await response.Content.ReadAsStringAsync();
-                item = await TryGetItemFromLocalStorage(bard);
+                item = await Known.TryGetItemFromLocalStorage(bard);
                 if (item != null)
                 {
                     Console.WriteLine($"Received a problem from the API but found the bard in the cache. {res}");
@@ -106,41 +94,8 @@ namespace Bardcoded
             };
             item = await response.Content.ReadFromJsonAsync<BarcodeView?>();
             if (item == null) return null;
-            await putItemIntoCache(item);
+            await Known.PutItemIntoCache(item);
             return item;
-        }
-
-        private async Task putItemIntoCache(BarcodeView data)
-        {
-            if(!await Features.IsEnabledAsync("UseLocalStorage"))
-            {
-                Console.WriteLine("Not using local storage.");
-                return;
-            }
-            var cachedBards = (await LocalStorageAccessor.GetValueAsync<Dictionary<String, BarcodeView>>(CachedBardsKey)) ?? new Dictionary<string, BarcodeView>();
-            cachedBards[data.Code] = data;
-            await LocalStorageAccessor.SetValueAsync(CachedBardsKey, cachedBards);
-        }
-
-        private async Task<BarcodeView?> TryGetItemFromLocalStorage(string bard)
-        {
-            if (!await Features.IsEnabledAsync("UseLocalStorage"))
-            {
-                Console.WriteLine("Not using local storage.");
-                return null;
-            }
-            var items = await LocalStorageAccessor.GetValueAsync<Dictionary<String, BarcodeView>>(CachedBardsKey);
-            if (items == null)
-            {
-                Console.WriteLine("No Bards have ever been cached.");
-                return null;
-            }
-            if (items.TryGetValue(bard, out BarcodeView? item))
-            {
-                Console.WriteLine("Found a cached bard.");
-                return item;
-            }
-            else return null;
         }
 
         public async Task<List<BarcodeView>> GetItems()

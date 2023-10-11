@@ -1,8 +1,9 @@
-﻿using Bardcoded.Shaded.Microsoft.AspNetCore.Mvc;
+﻿using Bardcoded.Shaded;
+using Bardcoded.Shaded.Microsoft.AspNetCore.Mvc;
 using System.Net;
 using System.Runtime.Serialization;
 
-namespace Bardcoded
+namespace Bardcoded.Exceptions
 {
     [Serializable]
     internal class ApiErrorResponseException : Exception
@@ -15,11 +16,11 @@ namespace Bardcoded
         {
         }
 
-        public ApiErrorResponseException(string? message, string bard, HttpStatusCode statusCode, ProblemDetails? res, Exception inner = null) : base(message,inner)
+        public ApiErrorResponseException(string? message, string bard, HttpStatusCode statusCode, ProblemDetails? res, Exception inner = null) : base(message, inner)
         {
-            this.Bard = bard;
-            this.StatusCode = statusCode;
-            this.Result = res;
+            Bard = bard;
+            StatusCode = statusCode;
+            Result = res;
         }
     }
 }
