@@ -54,8 +54,6 @@ namespace Bardcoded.API
 
             if (builder.Environment.IsDevelopment())
             {
-                //var fakeData = new List<Bardcoded.Data.Store.BarcodeData>(FakeBarcodeDataContext.DefaultTestData);
-                //var fake = new FakeBarcodeDataContext(fakeData);
                 builder.Services.AddDbContext<IBarcodeDataContext, FakeBarcodeDataContext>(ServiceLifetime.Singleton);
             }
             else
@@ -81,18 +79,9 @@ namespace Bardcoded.API
 
 
             var corsconfig = builder.Configuration.GetRequiredSection("Cors").Get<Dictionary<string, CorsPolicy>>();
-            //builder.Services.AddCors(opts =>
-            //{
-            //    var policy = new CorsPolicy();
-            //    foreach(var kvp in corsconfig)
-            //    {
-            //        opts.AddPolicy(kvp.Key, kvp.Value);
-            //    }
-            //});
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
@@ -128,7 +117,6 @@ namespace Bardcoded.API
                 .WithTags("Health")
                 .WithOpenApi();
 
-
             app.Run();
         }
 
@@ -146,8 +134,7 @@ namespace Bardcoded.API
         {
             return async (IConfiguration config, IHostEnvironment env) =>
             {
-
-                return Results.Ok(new { IsUp = true });
+                return Results.Ok(Health.Up);
             };
         }
 

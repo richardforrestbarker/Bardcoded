@@ -6,15 +6,8 @@ namespace Bardcoded.API.Data
 {
     public class FakeBarcodeDataContext : DbContext, IBarcodeDataContext
     {
-        public static readonly List<BarcodeData> DefaultTestData = new List<BarcodeData>()
-        {
-            new BarcodeData() { Id = Guid.NewGuid(), Bard = "bardcode 1", Base64Image = TestDatas.Base64EncodedMockImage, Description = "a thing", Name ="a thing", ImageType ="png", Source ="Manually Injested", },
-            new BarcodeData() { Id = Guid.NewGuid(), Bard = "bardcode 2", Base64Image = TestDatas.Base64EncodedMockImage, Description = "a thing", Name ="a thing", ImageType ="png", Source ="Manually Injested", },
-            new BarcodeData() { Id = Guid.NewGuid(), Bard = "bardcode 3", Base64Image = TestDatas.Base64EncodedMockImage, Description = "a thing", Name ="a thing", ImageType ="png", Source ="Manually Injested", },
-            new BarcodeData() { Id = Guid.NewGuid(), Bard = "bardcode 4", Base64Image = TestDatas.Base64EncodedMockImage, Description = "a thing", Name ="a thing", ImageType ="png", Source ="Manually Injested", },
-            new BarcodeData() { Id = Guid.NewGuid(), Bard = "769498031919", Base64Image = TestDatas.Base64EncodedMockImage, Description = "a thing", Name ="a thing", ImageType ="png", Source ="Manually Injested", },
-        };
-        public FakeBarcodeDataContext() : this(DefaultTestData)
+        
+        public FakeBarcodeDataContext() : this(TestDatas.DefaultBarcodes)
         {
 
         }

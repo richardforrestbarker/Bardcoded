@@ -21,7 +21,7 @@
     @if (Model.Base64Image != null && Model.ImageType != null)
     {
         <div class="">
-            <div><img height="@Height" width="@Width" src="data:image/@Model.ImageType;base64,@Model.Base64Image" /> </div>
+            <div><img style="max-width=@Width;max-height:@Height" height="@Height" width="@Width" src="data:image/@Model.ImageType;base64,@Model.Base64Image" /> </div>
             <label>What is it?</label>
             <InputText DisplayName="Name" @bind-Value="Model.Name"></InputText>
 
@@ -81,8 +81,8 @@
     [Inject] public NavigationManager navMan { get; set; }
     //[Inject] public IFeatureManager features {get; set;}
     [Parameter] public string Bard { get; set; }
-    [Parameter] public int Height { get; set; } = 786;
-    [Parameter] public int Width { get; set; } = 786;
+    [Parameter] public int Height { get; set; } = 1280;
+    [Parameter] public int Width { get; set; } = 1280;
     private Exception Error;
     private bool loading;
 

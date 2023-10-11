@@ -8,9 +8,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bardcoded.Tests", "Tests\Bardcoded.Tests.csproj", "{536A6CDA-C11F-4972-8AA1-B710111FBC02}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{35A8735D-AC0E-4072-9B17-B5CAB3217AF9}"
-	ProjectSection(SolutionItems) = preProject
-		.gitlab-ci.yml = .gitlab-ci.yml
-	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bardcoded.API", "Bardcoded.API\Bardcoded.API.csproj", "{333FE605-1253-4EA4-81EE-470200AFBFEB}"
 EndProject

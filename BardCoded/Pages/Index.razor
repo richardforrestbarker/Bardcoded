@@ -16,10 +16,9 @@
         {
             <p id="searching-message">Reading that image for a barcode.</p>
         }
-    </Spinner>
+        </Spinner>
     return;
 }
-
 <div>
     <InputFile OnChange="c=>Changed(c)" AdditionalAttributes="adds" />
 </div>
@@ -55,22 +54,22 @@ else if (Error != null)
     <Bardcoded.Components.AlertNotification>
         <Header>
             <strong>Ouf! Something didn't go right.</strong>
-            <hr />
-            <small>@Error.Message</small>
         </Header>
         <Message>
-            <div>
-                @if (Error is ApiErrorResponseException apiError)
+            @if (Error is ApiErrorResponseException apiError)
+            {
+                <p>The server reported a '@apiError.StatusCode' for @apiError.Bard</p>
+                @if (apiError.Result != null)
                 {
-                    <p>The server reported a '@apiError.StatusCode' for @apiError.Bard</p>
-                    @if (apiError.Result != null)
-                    {
-                        <p>
-                            @apiError.Result.Title - @apiError.Result.Detail
-                        </p>
-                    }
+                    <p>
+                        @apiError.Result.Title - @apiError.Result.Detail
+                    </p>
                 }
-            </div>
+            }
+            else
+            {
+                <p>@Error.Message</p>
+            }
         </Message>
     </Bardcoded.Components.AlertNotification>
 }
@@ -83,7 +82,7 @@ else if (Error != null)
     [Inject] public IJSRuntime js { get; set; }
     [Inject] public NavigationManager nav { get; set; }
     [Inject] public ApiClient http { get; set; }
-    [Parameter] public int Height { get; set; } = 720;
+    [Parameter] public int Height { get; set; } = 1280;
     [Parameter] public int Width { get; set; } = 1280;
     private BarcodeResult? Result { get; set; } = null;
     private BarcodeView? possibleKnown { get; set; } = null;
@@ -138,7 +137,25 @@ else if (Error != null)
         }
 
         byte[] bytes = new byte[0];
-        using (var stream = change.File.OpenReadStream(maxAllowedSize: Height * Width * 4 + 512000))
+        Stream stream;
+        try
+        {
+            stream = change.File.OpenReadStream(maxAllowedSize: Height * Width * 4 + 512000);
+        }
+        catch (System.IO.IOException io)
+        {
+            if (io.Message.IndexOf("exceeds the maximum of") > 0)
+            {
+                Error = new InvalidOperationException("That file is far too powerful for me!");
+            } else
+            {
+                Error = io;
+            }
+            Status = ScanStatus.WaitingForInput;
+            StateHasChanged();
+            return;
+        }
+        using (stream)
         {
             if (stream.Length == 0)
             {
@@ -165,6 +182,7 @@ else if (Error != null)
             try
             {
                 possibleKnown = await http.GetItem(Result.Text);
+
             }
             catch (ApiErrorResponseException apiError)
             {
